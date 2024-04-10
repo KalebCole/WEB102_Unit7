@@ -40,7 +40,7 @@ const App = () => {
       element:<ReadPosts data={posts}/>
     },
     {
-      path:"/edit/:id",
+      path:"/edit/:id", //use the useParams hook to get the id on the EditPost component
       element: <EditPost data={posts} />
     },
     {
