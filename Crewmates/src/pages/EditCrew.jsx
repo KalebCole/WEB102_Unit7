@@ -1,19 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import {supabase} from '../client';
 
 const EditCrew = () => {
     // State variables
-    const [crewName, setCrewName] = useState('');
-    const [crewRole, setCrewRole] = useState('');
+    const {id} = useParams();
+    const [crewMember, setcrewMember] = useState({
+        Name: '',
+        Speed: 0,
+        Color: '',
+    });
 
-    // Fetch crew data from API or database
-    useEffect(() => {
-        // Your code to fetch crew data goes here
-    }, []);
+   const updateCrewMember = async (e) => {
+        e.preventDefault();
+        await supabase.from('Crew').update({Name: crewMember.Name, Speed: crewMember.Speed, Color: crewMember.Color}).eq('id', id).select();
+        console.log("Crew member updated");
+   }
 
     // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Your code to update crew data goes here
+        setcrewMember({
+            Name: '',
+            Speed: 0,
+            Color: '',
+        });
     };
 
     return (
@@ -24,18 +35,27 @@ const EditCrew = () => {
                     Crew Name:
                     <input
                         type="text"
-                        value={crewName}
-                        onChange={(e) => setCrewName(e.target.value)}
+                        value={crewMember.Name}
+                        onChange={(e) => setcrewMember(e.target.value)}
                     />
                 </label>
                 <label>
-                    Crew Role:
+                    Crew Speed:
                     <input
                         type="text"
-                        value={crewRole}
-                        onChange={(e) => setCrewRole(e.target.value)}
+                        value={crewMember.Name}
+                        onChange={(e) => setcrewMember(e.target.value)}
                     />
                 </label>
+                <label>
+                    Crew Color:
+                    <input
+                        type="text"
+                        value={crewMember.Name}
+                        onChange={(e) => setcrewMember(e.target.value)}
+                    />
+                </label>
+               
                 <button type="submit">Save</button>
             </form>
         </div>

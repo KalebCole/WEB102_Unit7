@@ -31,7 +31,7 @@ function App() {
     },
     {
       path: "/edit/:id",
-      element: <EditCrew crew={crewMembers}/>,
+      element: <EditCrew/>,
     },
     {
       path: "/new",
