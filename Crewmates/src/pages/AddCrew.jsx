@@ -1,16 +1,17 @@
 import { useState } from 'react';
+import { supabase } from '../client';
 
 const AddCrew = () => {
     const [name, setName] = useState('');
-    const [age, setAge] = useState('');
+    const [speed, setSpeed] = useState('');
     const [color, setColor] = useState('');
 
     const handleNameChange = (e) => {
         setName(e.target.value);
     };
 
-    const handleAgeChange = (e) => {
-        setAge(e.target.value);
+    const handleSpeedChange = (e) => {
+        setSpeed(e.target.value);
     };
      
     const handleColorChange = (e) => {
@@ -19,7 +20,15 @@ const AddCrew = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Add your logic to handle form submission here
+        supabase.from('Crew').insert([
+            { Name: name, Speed: speed, Color: color }
+        ]).then(() => {
+            setName('');
+            setSpeed('');
+            setColor('');
+            // redirect to the view page
+            window.location.href = '/view';
+        })
     };
 
     return (
@@ -32,13 +41,13 @@ const AddCrew = () => {
                 </label>
                 <br />
                 <label>
-                    Age:
-                    <input type="number" value={age} onChange={handleAgeChange} />
+                    Speed:
+                    <input type="number" value={speed} onChange={handleSpeedChange} />
                 </label>
                 <br />
                 <label>
                     Color:
-                    <input type="number" value={color} onChange={handleColorChange} />
+                    <input type="text" value={color} onChange={handleColorChange} />
                 </label>
                 <button type="submit">Add</button>
             </form>
